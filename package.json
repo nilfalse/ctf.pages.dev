@@ -1,0 +1,21 @@
+{
+  "name": "ctf.pages.dev",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "tsc && vite build && wrangler pages dev",
+    "fmt": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9",
+    "typescript": "^7",
+    "vite": "^8",
+    "wrangler": "^4.148.0"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}
