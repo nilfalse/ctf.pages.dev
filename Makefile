@@ -5,13 +5,22 @@ SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DELETE_ON_ERROR :
 
+MAXMIND_URL := https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz
+PUBLISHED_URL := https://ctf.pages.dev/maxmind
+
 public/maxmind/GeoLite2-Country.mmdb :
-	@test -n "$$MAXMIND_ACCOUNT_ID" -a -n "$$MAXMIND_LICENSE_KEY" || { echo 'MAXMIND_ACCOUNT_ID and MAXMIND_LICENSE_KEY must be set' >&2; exit 1; }
 	mkdir -p $(@D)
-	curl -fsSL -D $(@D)/.headers -u "$$MAXMIND_ACCOUNT_ID:$$MAXMIND_LICENSE_KEY" 'https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz' | tar -xzv --strip-components 1 -C $(@D)
+ifneq ($(and $(MAXMIND_ACCOUNT_ID),$(MAXMIND_LICENSE_KEY)),)
+	curl -fsSL -D $(@D)/.headers -u "$$MAXMIND_ACCOUNT_ID:$$MAXMIND_LICENSE_KEY" '$(MAXMIND_URL)' | tar -xzv --strip-components 1 -C $(@D)
 	grep -i '^content-disposition:' $(@D)/.headers | grep -Eo '[0-9]{8}' | tail -1 > $(@D)/RELEASE.txt
 	rm $(@D)/.headers
-	@test -s $@ -a -s $(@D)/RELEASE.txt
+else ifeq ($(CI),)
+	@echo 'MAXMIND_ACCOUNT_ID/MAXMIND_LICENSE_KEY not set, fetching the published copy from $(PUBLISHED_URL)' >&2
+	for f in GeoLite2-Country.mmdb COPYRIGHT.txt LICENSE.txt RELEASE.txt; do curl -fsSL -o $(@D)/$$f $(PUBLISHED_URL)/$$f; done
+else
+	@echo 'MAXMIND_ACCOUNT_ID and MAXMIND_LICENSE_KEY must be set' >&2; exit 1
+endif
+	@grep -Eqx '[0-9]{8}' $(@D)/RELEASE.txt && grep -qa 'MaxMind.com' $@
 
 .PHONY : clean
 clean :
