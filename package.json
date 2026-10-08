@@ -19,6 +19,13 @@
     "vite": "^8",
     "wrangler": "^4.148.0"
   },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=26",
+      "onFail": "error"
+    }
+  },
   "keywords": [],
   "author": "nilfalse",
   "homepage": "https://nilfalse.com/addons/ctf",
