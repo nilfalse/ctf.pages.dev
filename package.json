@@ -10,12 +10,29 @@
     "fmt": "prettier --write ."
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "prettier": "^3.9.9",
     "typescript": "^7",
     "vite": "^8",
     "wrangler": "^4.148.0"
   },
+  "keywords": [],
+  "author": "nilfalse",
+  "homepage": "https://nilfalse.com/addons/ctf",
+  "license": "MPL-2.0",
   "prettier": {
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports"
+    ],
+    "importOrder": [
+      "<BUILTIN_MODULES>",
+      "<THIRD_PARTY_MODULES>",
+      "^~(?!.*\\.css(?:\\?.*)?$)(.+)$",
+      "^(?:\\.{1,2}/)(?!\\+)(?!.*\\.css(?:\\?.*)?$).*",
+      "^\\./\\+.*$",
+      "\\.css(?:\\?.*)?$"
+    ],
+    "importOrderSeparation": true,
     "singleQuote": true
   }
 }
