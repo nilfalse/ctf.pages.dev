@@ -1,17 +1,12 @@
 import type { Plugin } from 'vite';
 
-import * as country from '../../lib/country.ts';
-
-interface Api {
-  load(locale?: string): Promise<country.Territories>;
-}
+import * as country from '../lib/country.ts';
 
 const file = (locale: string) => `locales/${locale}/territories.json`;
 
-export default function territories(locales = ['en']): Plugin<Api> {
+export default function territories(locales = ['en']): Plugin {
   return {
     name: 'territories',
-    api: { load: country.territories },
 
     configureServer(server) {
       const pattern = new URLPattern({ pathname: `/:locale/territories.json` });

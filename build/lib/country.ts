@@ -22,3 +22,13 @@ export async function territories(locale = 'en') {
 
   return list as Territories;
 }
+
+const REGIONAL_INDICATOR_OFFSET =
+  '\u{1F1E6}'.codePointAt(0)! - 'A'.charCodeAt(0);
+
+export function codepoints(iso: TwoUppercaseLetters) {
+  return Array.from(
+    iso,
+    (char: string) => REGIONAL_INDICATOR_OFFSET + char.charCodeAt(0),
+  );
+}

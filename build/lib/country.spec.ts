@@ -2,6 +2,11 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import * as country from './country.ts';
 
+describe('codepoints()', () => {
+  it('should map ISO code to regional indicator symbols', () =>
+    expect(country.codepoints('UA')).toEqual([0x1f1fa, 0x1f1e6]));
+});
+
 describe('territories()', () => {
   let list: country.Territories;
 
