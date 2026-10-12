@@ -37,17 +37,18 @@ export default function wget({ files, concurrency }: Options): Plugin {
           return next();
         }
 
-        return cache.get(url).then((file) => {
-          if (file) {
-            res.setHeader(
-              'Content-Type',
-              mime.lookup(name) ?? 'application/octet-stream',
-            );
-            return pipeline(file, res);
-          } else {
-            return next();
-          }
-        }, next);
+        return cache
+          .get(url)
+          .then((file) => {
+            if (file) {
+              const type = mime.lookup(name) ?? 'application/octet-stream';
+              res.setHeader('Content-Type', type);
+              return pipeline(file, res);
+            } else {
+              return next();
+            }
+          })
+          .catch(next);
       });
     },
 

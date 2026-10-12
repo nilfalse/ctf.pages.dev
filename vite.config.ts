@@ -1,14 +1,15 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
 import * as country from './build/lib/country.ts';
 import * as twemoji from './build/lib/twemoji.ts';
+import maxmind from './build/plugins/maxmind.ts';
 import territories from './build/plugins/territories.ts';
 import wget from './build/plugins/wget.ts';
 
 const LOCALES = ['en'];
 const TWEMOJI_VERSION = '17.0.3';
 
-export default defineConfig(async ({ command }) => {
+export default defineConfig(async ({ command, mode }) => {
   async function twemojiAssets() {
     const version = command === 'build' ? TWEMOJI_VERSION : 'latest';
 
@@ -27,6 +28,11 @@ export default defineConfig(async ({ command }) => {
   };
 
   return {
-    plugins: [territories(LOCALES), wget({ files })],
+    plugins: [
+      // '' prefix loads every variable, including process.env and CI
+      maxmind(loadEnv(mode, process.cwd(), '')),
+      territories(LOCALES),
+      wget({ files }),
+    ],
   };
 });

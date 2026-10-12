@@ -16,7 +16,8 @@ export class WebCache {
     this.cacheDir = cacheDir;
   }
 
-  async get(url: string) {
+  /** Cached copy of `url`, fetched with `init` on a miss; `undefined` on 404. */
+  async get(url: string, init?: RequestInit) {
     const filepath = this.path(new URL(url));
 
     try {
@@ -28,14 +29,24 @@ export class WebCache {
       }
     }
 
-    const tmp = await this.fetch(url).then((body) => this.save(body));
-    if (!tmp) {
+    const body = await this.fetch(url, init);
+    if (!body) {
       return undefined;
     }
-    await fs.mkdir(path.dirname(filepath), { recursive: true });
-    await fs.rename(tmp, filepath);
+    await this.populate(url, body);
 
     return createReadStream(filepath);
+  }
+
+  /** Stores `body` as the cached copy of `url`, replacing any existing one. */
+  async populate(url: string, body: Readable | Uint8Array) {
+    const filepath = this.path(new URL(url));
+
+    await fs.mkdir(path.dirname(filepath), { recursive: true });
+    const tmp = await this.persist(
+      body instanceof Uint8Array ? Readable.from([body]) : body,
+    );
+    await fs.rename(tmp, filepath);
   }
 
   private path({ host, pathname, search }: URL) {
@@ -51,8 +62,8 @@ export class WebCache {
     return path.join(this.cacheDir, name);
   }
 
-  private async fetch(url: string) {
-    const response = await fetch(url);
+  private async fetch(url: string, init?: RequestInit) {
+    const response = await fetch(url, init);
     if (response.status === 404) {
       return undefined;
     }
@@ -63,13 +74,8 @@ export class WebCache {
     return Readable.fromWeb(response.body as ReadableStream);
   }
 
-  private async save(body: Readable | undefined) {
-    if (!body) {
-      return undefined;
-    }
-
-    await fs.mkdir(this.cacheDir, { recursive: true });
-    const tmp = path.join(this.cacheDir, `${crypto.randomUUID()}.tmp`);
+  private async persist(body: Readable) {
+    const tmp = path.resolve(this.cacheDir, `${crypto.randomUUID()}.tmp`);
     try {
       await pipeline(body, createWriteStream(tmp));
     } catch (error) {
