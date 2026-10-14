@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`airports CSV > should match the snapshot of large airports with an unassigned region 1`] = `
+{
+  "AUA": "AW-U-A Queen Beatrix International Airport",
+  "BDA": "BM-U-A L.F. Wade International Airport",
+  "CCK": "CC-U-A Cocos (Keeling) Islands Airport",
+  "CUR": "CW-U-A Hato International Airport",
+  "DZA": "YT-U-A Dzaoudzi Pamandzi International Airport",
+  "EIS": "VG-U-A Terrance B. Lettsome International Airport",
+  "EUN": "EH-U-A Laayoune Hassan I International Airport",
+  "FAE": "FO-U-A Vágar Airport",
+  "FDF": "MQ-U-A Martinique Aimé Césaire International Airport",
+  "GIB": "GI-U-A Gibraltar Airport",
+  "GUM": "GU-U-A Antonio B. Won Pat International Airport",
+  "IOM": "IM-U-A Isle of Man Airport",
+  "PPT": "PF-U-A Fa'a'ā International Airport",
+  "PTP": "GP-U-A Maryse Condé International Airport",
+  "RAR": "CK-U-A Rarotonga International Airport",
+  "ROP": "MP-U-A Rota International Airport",
+  "SJU": "PR-U-A Luis Munoz Marin International Airport",
+  "SKB": "KN-U-A Robert L. Bradshaw International Airport",
+  "SXM": "SX-U-A Princess Juliana International Airport",
+  "VIL": "EH-U-A Dakhla Airport",
+  "WLS": "WF-U-A Hihifo Airport",
+}
+`;

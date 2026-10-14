@@ -1,3 +1,4 @@
+import * as prettier from 'prettier';
 import type { Plugin } from 'vite';
 
 import * as country from '../lib/country.ts';
@@ -18,9 +19,10 @@ export default function territories(locales = ['en']): Plugin {
             return next();
           }
 
-          country.territories(locale).then((list) => {
+          country.territories(locale).then(async (list) => {
+            const json = JSON.stringify(list);
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(list));
+            res.end(await prettier.format(json, { parser: 'json' }));
           }, next);
         },
       );

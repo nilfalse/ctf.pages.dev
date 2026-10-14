@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 
 import * as country from './build/lib/country.ts';
 import * as twemoji from './build/lib/twemoji.ts';
+import airports from './build/plugins/airports.ts';
 import maxmind from './build/plugins/maxmind.ts';
 import territories from './build/plugins/territories.ts';
 import wget from './build/plugins/wget.ts';
@@ -32,6 +33,7 @@ export default defineConfig(async ({ command, mode }) => {
       // '' prefix loads every variable, including process.env and CI
       maxmind(loadEnv(mode, process.cwd(), '')),
       territories(LOCALES),
+      airports(),
       wget({ files }),
     ],
   };
