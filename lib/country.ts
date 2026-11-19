@@ -1,3 +1,10 @@
+/*
+ * Copyright 2026 nilfalse.com
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 export type Territories = Record<TwoUppercaseLetters, string>;
 
 /** Every locale file has this shape; `en` is only used to derive the type. */
@@ -11,10 +18,15 @@ export async function territories(locale = 'en') {
     `cldr-localenames-full/main/${locale}/territories.json`,
     { with: { type: 'json' } }
   );
-  const [{ localeDisplayNames }] = Object.values(cldr.default.main);
+  const [names] = Object.values(cldr.default.main);
+  if (!names) {
+    throw new Error(`No CLDR territory names for ${locale}`);
+  }
 
   const list: Record<string, string> = {};
-  for (const [code, name] of Object.entries(localeDisplayNames.territories)) {
+  for (const [code, name] of Object.entries(
+    names.localeDisplayNames.territories,
+  )) {
     if (/^[A-Z]{2}$/.test(code) && !SKIP.has(code)) {
       list[code] = name;
     }

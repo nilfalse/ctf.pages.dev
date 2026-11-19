@@ -14,15 +14,14 @@
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^26",
     "cldr-localenames-full": "^48.2.0",
-    "csv-parse": "^7.0.3",
+    "edges": "github:nilfalse/edges",
     "mrmime": "^2.0.1",
     "nanotar": "^0.3.0",
-    "p-memoize": "^8.0.0",
     "prettier": "^3.9.10",
     "typescript": "^7",
     "vite": "^8",
     "vitest": "^5",
-    "wrangler": "^4.151.0"
+    "wrangler": "^4.165.0"
   },
   "devEngines": {
     "runtime": {

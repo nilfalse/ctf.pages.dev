@@ -1,3 +1,9 @@
+/*
+ * Copyright 2026 nilfalse.com
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import path from 'node:path';
 import { buffer } from 'node:stream/consumers';
 import { pipeline } from 'node:stream/promises';
@@ -5,9 +11,9 @@ import { pipeline } from 'node:stream/promises';
 import * as mime from 'mrmime';
 import type { Plugin } from 'vite';
 
-import pkg from '../../package.json' with { type: 'json' };
 import { WebCache } from '../lib/WebCache.ts';
 import * as maxmind from '../lib/maxmind.ts';
+import pkg from '../package.json' with { type: 'json' };
 
 const DIR = 'maxmind';
 

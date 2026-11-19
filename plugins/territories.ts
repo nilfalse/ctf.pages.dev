@@ -1,9 +1,15 @@
+/*
+ * Copyright 2026 nilfalse.com
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import * as prettier from 'prettier';
 import type { Plugin } from 'vite';
 
 import * as country from '../lib/country.ts';
 
-export default function territories(locales = ['en']): Plugin {
+export default function territories(locales: string[]): Plugin {
   return {
     name: 'territories',
 
