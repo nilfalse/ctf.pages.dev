@@ -44,16 +44,12 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: package.json
-          cache: npm
-      - run: npm ci
-      - run: npm t
+      - run: npm i
       - uses: actions/cache/restore@v6
         with:
           path: node_modules/.vite/maxmind
           key: maxmind-${{ needs.check.outputs.release }}
+      - run: npm t
       - run: npm run build
         env:
           MAXMIND_ACCOUNT_ID: ${{ secrets.MAXMIND_ACCOUNT_ID }}

@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/node": "^26",
+    "@types/node": "^24",
     "cldr-localenames-full": "^48.2.0",
     "edges": "github:nilfalse/edges",
     "mrmime": "^2.0.1",
@@ -26,7 +26,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=26",
+      "version": ">=24",
       "onFail": "error"
     }
   },
