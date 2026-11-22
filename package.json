@@ -13,7 +13,7 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24",
-    "cldr-localenames-full": "^48.2.0",
+    "cldr-localenames-full": "^49.0.0",
     "edges": "github:nilfalse/edges",
     "mrmime": "^2.0.1",
     "nanotar": "^0.3.0",
